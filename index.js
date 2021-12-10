@@ -1,29 +1,15 @@
 #!/usr/bin/env node
 import process from 'process'
-import fs from 'fs'
-import util from 'util'
-import path from 'path'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { spawn } from 'child_process'
-import prompt from 'prompt'
-import got from 'got'
 import ethers from 'ethers'
 console.log("Sample CLI");
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 //local imports
 import * as accountFns from './util/accounts/accountFns.js';
+import * as configFns from './util/config/configFns.js';
+import * as defaultConfigs from './util/config/defaultConfigs.js';
+const defaultConfig = defaultConfigs.defaultConfig;
 
-
-const baseUrls = {main: "https://api.etherscan.io/"};
 const commands = {};//object holds all commands as attribtues
 
-function parseData(data){
-    return JSON.parse(data.body)
-}
 //Command class is a template for creating commands
 class Command {
     constructor(name, desc, func, passer=this.defaultPasser){
@@ -63,40 +49,6 @@ new Command("help", "list all commands and their descriptions",
         let keys = Object.keys(commands);
         keys.forEach(key => console.log(`${key}: ${commands[key].desc}`))
     });
-
-
-//AWS Environment Login
-const defaultConfig = {
-    "baseUrl": "https://api.etherscan.io/api/",
-    "apiKey":  "",
-}
-
-
-//Configuration Loading
-async function writeConfigFile(data){
-    //create new file
-    try{
-    let res = await writeFile(path.join(__dirname,'./config.json'), data);
-    return true;
-    }catch(err){
-        if(err){console.log(err); return false;}
-    }
-}
-
-async function loadConfig(defaultConfig){
-    //look for exsting config file
-    try{
-        let res = await readFile(path.join(__dirname,'./config.json'));
-        return JSON.parse(res);
-    }catch(err){
-        if(err.message == `ENOENT: no such file or directory, open '${__dirname}./config.json'`){
-            await writeConfigFile(defaultConfig);
-            let freshConfig = await loadConfig(defaultConfig);
-            return freshConfig;
-        }else{console.log(err);}
-    }
-} 
-
 
 //getConfig - show the current configuration for aws
 new Command("getConfig", "show the current configuration for the cli",
@@ -139,6 +91,6 @@ new Command("setConfig", "Set config to one of hardcoded defaults",
 var _config;
 (async function startScript(){
     //Look for existing config file and load it. If none, create one using defaultConfig const and load it
-    _config = await loadConfig(JSON.stringify(defaultConfig));
+    _config = await configFns.loadConfig(JSON.stringify(defaultConfig));
     await runCommand(process.argv);
 })();
