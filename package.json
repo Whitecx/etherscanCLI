@@ -1,0 +1,20 @@
+{
+  "name": "nodeclitemplate",
+  "version": "1.0.0",
+  "description": "Template for node CLIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "bin": {
+    "escan": "./index.js"
+  },
+  "author": "CXBW",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^5.5.2",
+    "got": "^11.8.3",
+    "prompt": "^1.2.0"
+  }
+}
