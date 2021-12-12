@@ -10,7 +10,7 @@ export default class Command {
         commands[name] = this;//add command to commands obj
     }
     async defaultPasser(cmd){
-        if(cmd.length == 2){ await this.func(); }
+        if(cmd.length == 3){ await this.func(); }
         else{
             let args = cmd.slice(3);
             let arg = cmd[3];
