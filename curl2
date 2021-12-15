@@ -1,0 +1,19 @@
+curl 'https://www.investing.com/instruments/HistoricalDataAjax' \
+  -H 'authority: www.investing.com' \
+  -H 'pragma: no-cache' \
+  -H 'cache-control: no-cache' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"' \
+  -H 'accept: text/plain, */*; q=0.01' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'origin: https://www.investing.com' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: https://www.investing.com/crypto/ethereum/historical-data' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  --data-raw 'curr_id=1061443&smlID=25674078&header=null&st_date=11%2F14%2F2016&end_date=12%2F14%2F2021&interval_sec=Daily&sort_col=date&sort_ord=DESC&action=historical_data' \
+  --compressed
